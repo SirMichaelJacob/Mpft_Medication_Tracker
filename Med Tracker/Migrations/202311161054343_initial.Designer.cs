@@ -13,7 +13,7 @@ namespace Med_Tracker.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202311150026314_initial"; }
+            get { return "202311161054343_initial"; }
         }
         
         string IMigrationMetadata.Source

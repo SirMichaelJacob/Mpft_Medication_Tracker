@@ -1,0 +1,115 @@
+﻿@model Med_Tracker.Models.AdminViewModel
+
+@{
+    ViewBag.Title = "Home";
+}
+
+
+<div class="container mt-3">
+    <h2>Admin Portal</h2>
+
+    <!-- Patient Management Accordion Section -->
+    <div class="accordion" id="accordionExample">
+        @if (Model.Patients.Any())
+        {<div class="accordion-item">
+                <h2 class="accordion-header" id="patients">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePat" aria-expanded="true" aria-controls="collapsePat">
+                        <span class="fw-bold text-info">Patients Management</span>
+                    </button>
+                </h2>
+                <div id="collapsePat" class="accordion-collapse collapse show" aria-labelledby="patients" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <table class="table table-primary table-striped text-white table-hover fw-light">
+                            <tr>
+                                <th>NHS Number</th>
+                                <th>Email</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th></th>
+                            </tr>
+                            <!-- Display patient details here -->
+                            @foreach (var patient in Model.Patients)
+                            {
+                                <tr>
+                                    <td>@patient.NHSNumber</td>
+                                    <td>@patient.Email</td>
+                                    <td>@patient.FirstName</td>
+                                    <td>@patient.LastName</td>
+                                    <td>                                       
+
+                                        @Html.ActionLink("Manage Medications", "users", "Medication", new { id = @patient.PatientId }, null)
+
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                        
+                    </div>
+                </div>
+            </div>
+
+        }
+        @if (Model.Patients.Any())
+        {<div class="accordion-item">
+                <h2 class="accordion-header" id="medications">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMed" aria-expanded="true" aria-controls="collapseMed">
+                        <span class="text-success">Medication Management</span>
+                    </button>
+                </h2>
+                <div id="collapseMed" class="accordion-collapse collapse show" aria-labelledby="medications" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <table class="table table-success table-striped text-white fw-light table-hover">
+                            <tr>
+                                <th>Patient</th>
+                                <th>Medication Type</th>
+                                <th>Name</th>
+                                <th>Dosage</th>
+                                <th>Frequency</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th></th>
+                            </tr>
+                            <!-- Display patient details here -->
+                            @foreach (var medication in Model.Medications)
+                            {
+                                <tr>
+                                    <td>@Html.Action("getUser","Account", new { userid =medication.PatientId})</td>
+                                    <td>@medication.MedicationType</td>
+                                    <td>@medication.MedicationName</td>
+                                    <td>@medication.Dosage</td>
+                                    <td>@medication.Frequency</td>
+                                    <td>@medication.StartDate</td>
+                                    <td>@medication.EndDate</td>
+                                    <td>
+
+                                        @Html.ActionLink("Update", "edit", "Medication", new { id = medication.MedicationId }, null)
+
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        }
+
+
+    </div>   
+
+
+</div>
+
+<script src="https://unpkg.com/popper.js@2"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+

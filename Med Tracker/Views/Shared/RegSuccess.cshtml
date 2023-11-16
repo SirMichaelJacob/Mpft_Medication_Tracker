@@ -1,0 +1,14 @@
+﻿
+@model Med_Tracker.Models.Patient
+@{
+    ViewBag.Title = "Registration Success Page";
+}
+
+<h2 class="text-center text-success">Registration Sucessful</h2>
+<p class="text-center fw-bold">
+    Check your email @Model.Email.ToLower() to verify your account
+</p>
+<p class="align-content-center justify-content-center text-center">
+    @Html.ActionLink("Login", "Index", "Login")
+</p>
+

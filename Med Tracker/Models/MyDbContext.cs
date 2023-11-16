@@ -9,5 +9,7 @@ namespace Med_Tracker.Models
         public DbSet<Medication> Medications { get; set; }
 
         public DbSet<Provider> Providers { get; set; }
+
+
     }
 }

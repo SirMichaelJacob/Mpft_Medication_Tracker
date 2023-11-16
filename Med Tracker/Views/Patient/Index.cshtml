@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Med_Tracker.Models.Patient>
+
+@{
+    ViewBag.Title = "Patients";
+}
+
+<h2>Admin Portal</h2>
+
+<p>
+    @Html.ActionLink("Register New Patient", "Register")
+</p>
+<table class="table table-primary table-striped text-white table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NHSNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Confirmed)
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NHSNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Confirmed)
+        </td>
+        
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { id = item.PatientId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.PatientId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.PatientId }, new { onclick = "return confirm('Are you Sure to delete?')" })*@
+
+            @Html.ActionLink("Manage Medications", "users","Medication", new { id = item.PatientId },null) 
+            
+        </td>
+    </tr>
+}
+
+</table>
