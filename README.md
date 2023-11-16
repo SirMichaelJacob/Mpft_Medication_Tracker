@@ -1,4 +1,6 @@
 # MPFT (Med Tracker) Medication Tracking System
+![Screenshot1](https://github.com/SirMichaelJacob/Mpft_Medication_Tracker/assets/92210973/4cd6d053-bba6-49b5-a8ad-bce5754f45af)
+
 
 ## Introduction
 
@@ -33,6 +35,8 @@ Some code segments (e.g the SendEmailNotification) have been commented out to av
 - **MyDbContext**: Database context class for Entity Framework.
 
 ## Getting Started
+![image](https://github.com/SirMichaelJacob/Mpft_Medication_Tracker/assets/92210973/d8c98179-5d76-44d5-8e18-0efe04fb45c6)
+
 
 ### Prerequisites
 
