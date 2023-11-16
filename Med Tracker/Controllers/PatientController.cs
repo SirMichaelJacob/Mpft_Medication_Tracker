@@ -13,7 +13,7 @@ using System.Web.Security;
 namespace Med_Tracker.Controllers
 {
     //[AuthorizeUserAccess]
-    [Authorize]
+
     public class PatientController : Controller
     {
         static string _salt = "MIDLANDS";
@@ -21,7 +21,7 @@ namespace Med_Tracker.Controllers
 
 
         //Index
-
+        [Authorize]
         public ActionResult Index()
         {
             var userId = int.Parse(HttpContext.User.Identity.Name);
@@ -49,16 +49,22 @@ namespace Med_Tracker.Controllers
             }
             return RedirectToAction("Index", "Medication");
         }
-        //CREATE: Patient
 
+        /// <summary>
+        /// Action Method (Get) to load patient registration form
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Register()
         {
             return View();
         }
 
-        /* Add New Patient*/
+        /// <summary>
+        /// Action Method (Post) to Create new Patient account
+        /// </summary>
+        /// <param name="patient"></param>
+        /// <returns></returns>
         [HttpPost]
-
         public ActionResult Register(Patient patient)
         {
             if (!IsEmailAlreadyUsed(patient.Email))
@@ -81,7 +87,8 @@ namespace Med_Tracker.Controllers
                 _db.SaveChanges();
 
                 //Send Registration and Confirmation mail
-                SendConfirmationEmail(patient.Email, patient.RegToken);
+                /*Un-coment the next line to send registration email*/
+                //SendConfirmationEmail(patient.Email, patient.RegToken);
 
                 //return RedirectToAction("Index");
                 return View("RegSuccess", patient);
@@ -96,7 +103,11 @@ namespace Med_Tracker.Controllers
 
         }
 
-        //Edit Patient
+        /// <summary>
+        /// Action Method (Get) to retrieve Patient data and load to view for editing
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize]
         public ActionResult Edit(int id)
         {
@@ -116,7 +127,11 @@ namespace Med_Tracker.Controllers
         }
 
 
-        /*Edit*/
+        /// <summary>
+        /// Action Method to Update Patient account data
+        /// </summary>
+        /// <param name="patient"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPut]
         public ActionResult Edit(Patient patient)
@@ -138,7 +153,11 @@ namespace Med_Tracker.Controllers
         }
 
 
-
+        /// <summary>
+        /// Delete Action method to remove Patient account
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         /*Delete*/
         //Note that I do not need to specify [HttpDelete] attribute because Ive done a Prefix with Delete
         [Authorize]
@@ -166,7 +185,10 @@ namespace Med_Tracker.Controllers
 
 
 
-        /* METHODS to generate NHS number*/
+        /// <summary>
+        /// * Method to generate Alpha numeric NHS number*
+        /// </summary>
+        /// <returns></returns>
         private string GenerateUniqueNHSNumber()
         {
             string nhsNumber;
@@ -178,6 +200,12 @@ namespace Med_Tracker.Controllers
             return nhsNumber;
         }
 
+
+        /// <summary>
+        /// Method to Generate Alphanumeric Random Number
+        /// </summary>
+        /// <param name="length"></param>
+        /// <returns></returns>
         private string GenerateRandomAlphanumeric(int length)
         {
             const string alphanumericChars = "ABCDEFGHIJKLMNPQRSTUVWXYZ0123456789";
@@ -192,14 +220,23 @@ namespace Med_Tracker.Controllers
             return result.ToString();
         }
 
+
+        /// <summary>
+        /// Method to check if NHS Number is Unique 
+        /// </summary>
+        /// <param name="nhsNumber"></param>
+        /// <returns></returns>
         private bool IsNHSNumberAlreadyUsed(string nhsNumber)
         {
             return _db.Patients.Any(u => u.NHSNumber == nhsNumber);
         }
 
-        /*Generate Reg token*/
 
-        // Method to generate a registration token
+        /// <summary>
+        /// Method to generate a registration token for User registration.
+        /// This token will be used to verify user account
+        /// </summary>
+        /// <returns></returns>
         private string GenerateRegistrationToken()
         {
             // Generate a unique identifier using GUID
@@ -214,14 +251,23 @@ namespace Med_Tracker.Controllers
             return token;
         }
 
-
+        /// <summary>
+        /// Method to check if Email address exists in the database
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         private bool IsEmailAlreadyUsed(string email)
         {
             return _db.Patients.Any(u => u.Email.ToLower() == email.ToLower());
         }
 
 
-        // Method to send the confirmation email
+        /// <summary>
+        /// Method to send the confirmation email to user mail address.
+        /// This method requires the user email and registration token
+        /// </summary>
+        /// <param name="userEmail"></param>
+        /// <param name="myToken"></param>
         private void SendConfirmationEmail(string userEmail, string myToken)
         {
             // Configure the SMTP settings for your email provider
@@ -247,7 +293,12 @@ namespace Med_Tracker.Controllers
             smtpClient.Send(mailMessage);
         }
 
-        // Method to validate the registration token
+        /// <summary>
+        /// Method to validate the registration token
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         private bool ValidateToken(string email, string token)
         {
             bool isValid = false;
@@ -276,7 +327,13 @@ namespace Med_Tracker.Controllers
             return isValid;
         }
 
-        // Action method to confirm the user account
+        /// <summary>
+        /// Action method to confirm the user account.
+        /// Sets the CONFIRMED field in Database to 'YES'
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="regToken"></param>
+        /// <returns></returns>
         public ActionResult ConfirmAccount(string email, string regToken)
         {
 
@@ -317,6 +374,12 @@ namespace Med_Tracker.Controllers
             return View();
         }
 
+
+        /// <summary>
+        /// Find patient in database and returns Patient Object 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public Patient FindPatient(String email)
         {
             var model = new Patient();

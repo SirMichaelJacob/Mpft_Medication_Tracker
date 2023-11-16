@@ -10,55 +10,23 @@ namespace Med_Tracker.Controllers
     public class AccountController : Controller
     {
 
-        static string _salt = "MIDLANDS";
-        MyDbContext _db = new MyDbContext();
+        static string _salt = "MIDLANDS"; //Password Salt to improve password strength
+        readonly MyDbContext _db = new MyDbContext(); //ReadOnly DbContext Object
 
-
-        public AccountController()
-        {
-
-        }
 
 
         // GET: Account
         [Authorize]
         public ActionResult Index()
         {
-
-
-            return RedirectToAction("Index", "Medication");
+            return RedirectToAction("Index", "Medication"); //Redirect LoggedIn Patients to Medication Area
         }
 
-        public string UserType(int? userid)
-        {
-            var result = "Null";
-            if (userid != null)
-            {
-
-                var user = _db.Patients.Where(x => x.PatientId.ToString() == userid.ToString()).FirstOrDefault();
-                var admin = _db.Providers.Where(x => x.ProviderId.ToString() == userid.ToString()).FirstOrDefault();
-
-                if (user != null)
-                {
-                    result = "Patient";
-                }
-                if (admin != null)
-                {
-                    result = "Provider";
-                }
-
-                return result;
-
-            }
-            else
-            {
-                return result;
-            }
-
-
-        }
-
-
+        /// <summary>
+        /// Return User First name and Lastname
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
         public string getUser(int? userid)
         {
             var result = "Null";
@@ -89,6 +57,11 @@ namespace Med_Tracker.Controllers
         }
 
 
+        /// <summary>
+        /// LogOut Method.
+        /// Sign the User out and clears all sessions
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         public ActionResult Logout()
         {

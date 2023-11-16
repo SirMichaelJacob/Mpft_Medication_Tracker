@@ -8,6 +8,11 @@ namespace Med_Tracker
     {
         private static MyDbContext _db = new MyDbContext();
 
+        /// <summary>
+        /// Returns User Type either 'Patient' or 'Healthcare Provider'
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
         public static string UserType(int? userid)
         {
             var result = "Null";

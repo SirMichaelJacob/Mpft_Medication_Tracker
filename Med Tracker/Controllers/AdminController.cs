@@ -9,9 +9,10 @@ using System.Web.Security;
 
 namespace Med_Tracker.Controllers
 {
+    /* This Controller Manages Healthcare provider Registration and Login*/
     public class AdminController : Controller
     {
-        static string _salt = "MIDLANDS";
+        static string _salt = "MIDLANDS"; //Salt to improve password strength
         MyDbContext _db = new MyDbContext();
 
         // GET: Admin
@@ -19,10 +20,12 @@ namespace Med_Tracker.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Medication");
+                return RedirectToAction("Index", "Medication"); //Redirects LoggedIn Users to medication area
             }
             return View();
         }
+
+        /*Healthcare provider Login Action method*/
 
         [HttpPost]
         [ActionName("Index")]
@@ -34,7 +37,6 @@ namespace Med_Tracker.Controllers
             {
                 if (provider.Email.ToUpper() == model.Email.ToUpper() && Crypto.VerifyHashedPassword(provider.PasswordHash, model.PasswordHash + _salt))
                 {
-
                     user = provider;
                     break;
                 }
@@ -42,11 +44,10 @@ namespace Med_Tracker.Controllers
             if (user != null)
             {
                 HttpContext.Session.Clear();
-                Session.Abandon(); //End All previous sessions
+                Session.Abandon(); //End All previous sessions before authenticating new sign in
 
-                AuthenticateUser(user);
+                AuthenticateUser(user); //Authenticate User
                 return RedirectToAction("Index", "Account");
-                //return Content(HttpContext.User.Identity.Name);
 
             }
             else

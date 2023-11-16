@@ -60,7 +60,6 @@ namespace Med_Tracker.Controllers
 
                 AuthenticateUser(user);
                 return RedirectToAction("Index", "Account");
-                //return Content(HttpContext.User.Identity.Name);
 
             }
             else
@@ -82,7 +81,11 @@ namespace Med_Tracker.Controllers
             return patientsList;
         }
 
-        //User Authentication
+        /// <summary>
+        /// User Authentication.
+        /// Uses Form Authentication and Sessions
+        /// </summary>
+        /// <param name="account"></param>
         public void AuthenticateUser(Patient account)
         {
             FormsAuthentication.SetAuthCookie(account.PatientId.ToString(), true);

@@ -12,7 +12,10 @@ namespace Med_Tracker
         public static MyDbContext _db = new MyDbContext();
 
 
-
+        /// <summary>
+        /// Send Medication Reminder to Patient
+        /// </summary>
+        /// <param name="medication"></param>
         public static void ScheduleEmailNotification(Medication medication)
         {
             RecurringJob.AddOrUpdate(
@@ -23,6 +26,11 @@ namespace Med_Tracker
             );
         }
 
+        /// <summary>
+        /// Set the frequency of Notification
+        /// </summary>
+        /// <param name="medication"></param>
+        /// <returns></returns>
         public static string setFrequency(Medication medication)
         {
             if (medication.Frequency == "Once Daily (24 hourly)")
@@ -48,6 +56,11 @@ namespace Med_Tracker
             return Cron.Never(); //For PRN (As needed)
         }
 
+
+        /// <summary>
+        /// Send Email Notification
+        /// </summary>
+        /// <param name="medication"></param>
         public static void SendEmailNotification(Medication medication)
         {
             Patient patient = _db.Patients.SingleOrDefault(x => x.PatientId == medication.PatientId);
@@ -72,8 +85,10 @@ namespace Med_Tracker
             mailMessage.IsBodyHtml = true;
             //Url.Action("", "", "", "");
 
-            // Send the email
-            smtpClient.Send(mailMessage);
+            /* Send the email*/
+            //Uncomment the next line code to send Notification mail
+
+            //smtpClient.Send(mailMessage);
 
 
 

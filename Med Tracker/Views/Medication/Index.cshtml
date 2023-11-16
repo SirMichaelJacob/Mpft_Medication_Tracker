@@ -11,57 +11,74 @@
 <p>
     @Html.ActionLink("Add New Medication", "New")
 </p>
-<table class="table table-success table-responsive table-hover">
-    <tr>
-        
-        <th>
-            @Html.DisplayNameFor(model => model.MedicationName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MedicationType)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dosage)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Frequency)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        
-        <td>
-            @Html.DisplayFor(modelItem => item.MedicationName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MedicationType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dosage)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Frequency)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MedicationId }) |
-            @*@Html.ActionLink("Details", "Details", new { id=item.MedicationId }) |*@
-            @Html.ActionLink("Delete", "Delete", new { id=item.MedicationId }, new { onclick = "return confirm('Are you Sure to delete?')" })
-        </td>
-    </tr>
-}
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="patients">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePat" aria-expanded="true" aria-controls="collapsePat">
+                <span class="fw-light text-info">My Medications</span>
+            </button>
+        </h2>
+        <div id="collapsePat" class="accordion-collapse collapse show" aria-labelledby="patients" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
 
-</table>
+                <table class="table table-success table-responsive table-hover fw-lighter">
+                    <tr>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.MedicationName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.MedicationType)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Dosage)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Frequency)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.StartDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EndDate)
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MedicationName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MedicationType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Dosage)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Frequency)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StartDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EndDate)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.MedicationId }) |
+                                @*@Html.ActionLink("Details", "Details", new { id=item.MedicationId }) |*@
+                                @Html.ActionLink("Delete", "Delete", new { id = item.MedicationId }, new { onclick = "return confirm('Are you Sure to delete?')" })
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+
+            </div>
+            </div>
+        </div>
+    </div>

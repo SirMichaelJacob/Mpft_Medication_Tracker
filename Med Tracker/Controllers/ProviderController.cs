@@ -11,7 +11,9 @@ using System.Web.Security;
 
 namespace Med_Tracker.Controllers
 {
-
+    /// <summary>
+    /// Health Care Provider Controller
+    /// </summary>
     public class ProviderController : Controller
     {
         static string _salt = "MIDLANDS";
@@ -82,7 +84,6 @@ namespace Med_Tracker.Controllers
             return View("Register", provider);
         }
 
-
         /*Edit*/
         [AuthorizeUserAccess]
         [HttpPut]
@@ -103,8 +104,6 @@ namespace Med_Tracker.Controllers
             }
 
         }
-
-
 
         /*Delete*/
         //Note that I do not need to specify [HttpDelete] attribute because Ive done a Prefix with Delete
@@ -129,9 +128,6 @@ namespace Med_Tracker.Controllers
                 return RedirectToAction("Index"); ;
             }
         }
-
-
-
 
 
         private string GenerateRandomAlphanumeric(int length)
@@ -183,7 +179,11 @@ namespace Med_Tracker.Controllers
         }
 
 
-        // Method to send the confirmation email
+        /// <summary>
+        /// Method to send the confirmation email
+        /// </summary>
+        /// <param name="userEmail"></param>
+        /// <param name="myToken"></param>
         private void SendConfirmationEmail(string userEmail, string myToken)
         {
             // Configure the SMTP settings for your email provider
@@ -209,7 +209,12 @@ namespace Med_Tracker.Controllers
             smtpClient.Send(mailMessage);
         }
 
-        // Method to validate the registration token
+        /// <summary>
+        ///  Method to validate the registration token
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         private bool ValidateToken(string email, string token)
         {
             bool isValid = false;
@@ -238,7 +243,12 @@ namespace Med_Tracker.Controllers
             return isValid;
         }
 
-        // Action method to confirm the user account
+        /// <summary>
+        /// Action method to confirm the HC Provider account
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="regToken"></param>
+        /// <returns></returns>
         public ActionResult ConfirmAccount(string email, string regToken)
         {
 
@@ -279,6 +289,12 @@ namespace Med_Tracker.Controllers
             return View();
         }
 
+
+        /// <summary>
+        /// Find the HC Provider using his email
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public Provider FindProvider(String email)
         {
             var model = new Provider();
