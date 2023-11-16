@@ -3,6 +3,8 @@
 ## Introduction
 
 The Medication Tracking System is a web application designed to help healthcare providers and patients manage medication information efficiently. This README provides an overview of the project structure, key components, and instructions on how to run the application.
+### Note: 
+Some code segments (e.g the SendEmailNotification) have been commented out to avoid errors (exception). Uncomment them to enable this functionality.
 
 ## Table of Contents
 
